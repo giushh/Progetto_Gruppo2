@@ -72,3 +72,38 @@ Stai progettando il software di base per un'officina che si occupa di riparare e
 Requisito: il metodo deve utilizzare type() (o, come variante consigliata, isinstance()) 
 per differenziare in base al tipo reale degli oggetti.
 """
+
+class Officina:
+    def __init__(self, nome:str, tickets:list[TicketRiparazione]):
+        self.nome = nome
+        self.tickets = tickets
+
+    def aggiungi_ticket(self, ticket:TicketRiparazione):
+        self.tickets.append(ticket)
+
+    def chiudi_ticket(self, id_ticket):
+        trovato = False
+        for ticket in self.tickets:
+            id = ticket.get_id_ticket()
+            if id_ticket == id:
+                self.tickets.remove(ticket)
+                print("Il ticket", id_ticket, "è stato chiuso correttamente.")
+                trovato = True
+        if not trovato:
+            print("Il ticket", id_ticket, "non è tra quelli aperti.")
+
+    def stampa_ticket_aperti(self):
+        print("I ticket aperti sono:")
+        nessuno = True
+        for ticket in self.tickets:
+            if ticket.get_stato() == "aperto":
+                nessuno = False
+                print("ID", ticket.get_id(), "tipo di elettrodomestico:", ticket.get_elettrodomestico(), "stato:", ticket.get_stato())
+        if nessuno:
+            print("Non c'è nessun ticket aperto.")
+
+
+    def totale_preventivi(self):
+        pass
+
+
