@@ -89,6 +89,7 @@ class Officina:
                 self.tickets.remove(ticket)
                 print("Il ticket", id_ticket, "è stato chiuso correttamente.")
                 trovato = True
+                
         if not trovato:
             print("Il ticket", id_ticket, "non è tra quelli aperti.")
 
@@ -104,6 +105,27 @@ class Officina:
 
 
     def totale_preventivi(self):
-        pass
+        totale = 0.0
+        for ticket in self.tickets:
+            totale = totale + ticket.calcola_preventivo()
+        return totale
+    
+    def statistiche_per_tipo(self):
+        num_lavatrici = 0
+        num_frigoriferi = 0
+        num_forni = 0
 
+        for ticket in self.tickets:
+            elettro = ticket.get_elettrodomestico()
+
+            if type(elettro) == Lavatrice:
+                num_lavatrici += 1
+            elif type(elettro) == Frigorifero:
+                num_frigoriferi += 1
+            elif type(elettro) == Forno:
+                num_forni += 1
+
+        print("Numero di lavatrici in riparazione:", num_lavatrici)
+        print("Numero di frigoriferi in riparazione:", num_frigoriferi)
+        print("Numero di forni in riparazione:", num_forni)
 
