@@ -1,0 +1,8 @@
+Ci dividiamo per classi inizialmente, per poter creare una struttura di base.
+	- Ilaria: classi Elettrodomestico e derivate (punto 1 e 2, sono collegati)
+	- Valerio: classe TicketRiparazione (punto 3)
+	- Veronica: classe Officina (punto 4)
+
+Primo check: implementare base del programma
+
+Check successivi: rifinire e aggiungere punto 5.
