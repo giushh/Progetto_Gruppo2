@@ -72,3 +72,67 @@ Stai progettando il software di base per un'officina che si occupa di riparare e
 Requisito: il metodo deve utilizzare type() (o, come variante consigliata, isinstance()) 
 per differenziare in base al tipo reale degli oggetti.
 """
+# Attributi privati (Incapsulamento). Attributi inizianti per __ quindi nessuno può modificarli dall'esterno.
+class TicketRiparazione:
+    def __init__(self, id_ticket, elettrodomestico):    # Costruttore __init__ per legare il ticket ad un elettrodomestico specifico.
+        self.__id_ticket = id_ticket                    # Numero identificativo della riparazione.
+        self.__elettrodomestico = elettrodomestico      # Salva l'intero oggetto (Lavatrice, Forno o Frigo) che "arriva" dagli "Elettrodomestici".
+        self.__stato = "aperto"                         # Stato di base "aperto" (?)
+        self.__note = []                                # Lista che serve a tenere traccia di cosa dicono i tecnici durante il lavoro (?)
+
+# Metodi Getter e Setter per fornire le chiavi degli attributi per leggerli o modificarli.
+    def get_id_ticket(self):
+        return self.__id_ticket     # Per sapere qual è lo stato del ticket.
+    def get_stato(self):
+        return self.__stato
+    def set_stato(self, s):         # Per cambiare lo stato (ad esempio da "aperto" a "chiuso" o viceversa).
+        self.__stato = s
+    def get_elettrodomestico(self): # Per sapere di che marca è l'elettrodomestico.
+        return self.__elettrodomestico
+    
+    def aggiungi_nota(self, testo):
+        self.__note.append(testo)
+
+    def calcola_preventivo(self, *voci_extra):              # * Permette all'utente di inserire quanti numeri vuole, Python li raggruppa tutti in una tulpa che scorre con il ciclo for.
+        # Polimorfismo: chiama il metodo corretto in base al tipo reale. Chiama stima_costo_base() dalla sottoclasse.
+        totale = self.__elettrodomestico.stima_costo_base() # stima_costo_base dalla Classe base "Elettrodomestici".
+        for spesa in voci_extra:
+            totale += spesa
+        return totale
+    
+# Class officina (Veronica)
+class Officina:
+    def __init__(self, nome:str):
+        self.nome = nome
+        self.tickets = []   # Lista vuota di ticket di default.
+
+    def aggiungi_ticket(self, ticket:TicketRiparazione):    # Aggiunge un nuovo ticket alla gestione dell'officina.
+        self.tickets.append(ticket)
+
+    def chiudi_ticket(self, id_ticket): # Cerca un ticket per ID.
+        trovato = False
+        for ticket in self.tickets:
+            if ticket.get_() == id_ticket:
+                ticket.set_stato("chiusa")
+                print(f"Il ticket", {id_ticket}, "è stato chiuso correttamente.")
+                trovato = True
+        if not trovato:
+            print(f"Il ticket", {id_ticket}, "non è tra quelli aperti.")
+
+    def stampa_ticket_aperti(self):
+        print("I ticket aperti sono:")
+        nessuno = True
+        for ticket in self.tickets:
+            if ticket.get_stato() == "aperto":
+                nessuno = False
+                elettrodomestico = ticket.get_elettrodomestico()
+                print("ID", ticket.get_id(), "tipo di elettrodomestico:", ticket.get_elettrodomestico(), "stato:", ticket.get_stato())
+        if nessuno:
+            print("Non c'è nessun ticket aperto.")
+
+    def totale_preventivi(self):        # Somma i preventivi base di tutti i ticket presenti.
+        somma_totale = 0.0
+        for ticket in self.tickets:   # Richiamo il metodo ticket.
+            somma_totale += ticket.calcola_preventivo()
+        print(f"Valore totale stimato dei lavori: €{somma_totale}.")
+        return somma_totale
