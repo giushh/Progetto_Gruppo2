@@ -6,3 +6,11 @@ Ci dividiamo per classi inizialmente, per poter creare una struttura di base.
 Primo check: implementare base del programma
 
 Check successivi: rifinire e aggiungere punto 5.
+
+
+***** fine giornata 12/02/2026 *****
+- pezzi uniti coerentemente
+
+da fare: 
+- testare tutte le funzionalità
+- risolvere bug anno futuro ed eventuali altri 
