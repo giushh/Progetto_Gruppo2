@@ -338,7 +338,8 @@ class TicketRiparazione:
     def aggiungi_nota(self, testo):
         self.__note.append(testo)
 
-    def calcola_preventivo(self, *voci_extra):              # * Permette all'utente di inserire quanti numeri vuole, Python li raggruppa tutti in una tulpa che scorre con il ciclo for.
+    def calcola_preventivo(self, *voci_extra):              
+        # * Permette all'utente di inserire quanti numeri vuole, Python li raggruppa tutti in una tulpa che scorre con il ciclo for.
         # Polimorfismo: chiama il metodo corretto in base al tipo reale. Chiama stima_costo_base() dalla sottoclasse.
         totale = self.__elettrodomestico.stima_costo_base() # stima_costo_base dalla Classe base "Elettrodomestici".
         for spesa in voci_extra:
