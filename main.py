@@ -269,14 +269,13 @@ class Officina:
             print("Il ticket", id_ticket, "non è tra quelli aperti.")
 
     def stampa_ticket_aperti(self):
-        print("I ticket aperti sono:")
-        nessuno = True
-        for ticket in self.tickets:
-            if ticket.get_stato() == "aperto":
-                nessuno = False
+        
+        if len(self.tickets) != 0:
+            print("I ticket aperti sono: ")
+            for ticket in self.tickets:
                 elettro = ticket.get_elettrodomestico()
-                print("ID", ticket.get_id_ticket(), "tipo di elettrodomestico:", type(elettro).__name__, "stato:", ticket.get_stato())
-        if nessuno:
+                print("ID", ticket.get_id_ticket(), "tipo di elettrodomestico:", type(elettro).__name__)
+        else:
             print("Non c'è nessun ticket aperto.")
 
 
@@ -365,7 +364,7 @@ if __name__ == "__main__":
                 tipo = input("Tipo elettrodomestico (1=Lavatrice, 2=Frigorifero, 3=Forno): ")                
                 anno = int(input("Anno acquisto: "))
                 
-                if anno <= 2026:
+                if anno <= 2026 and anno > 1900:
                                
                     id_ticket = input("Inserisci ID ticket: ")
                     
@@ -415,9 +414,20 @@ if __name__ == "__main__":
             
             
             case "3":
-                id_ticket = input("Inserisci ID del ticket da chiudere: ")
-                officina.chiudi_ticket(id_ticket)
-                lista_tickets_aperti.remove(id_ticket)
+                officina.stampa_ticket_aperti()
+                
+                if len(lista_tickets_aperti) != 0:
+                    id_ticket = input("Inserisci ID del ticket da chiudere: ")
+                    
+                    if id_ticket in lista_tickets_aperti:
+                        
+                        officina.chiudi_ticket(id_ticket)
+                        lista_tickets_aperti.remove(id_ticket)
+                    
+                    else:
+                        print("Ticket non presente.")
+                else: 
+                    print("Non hai ticket da chiudere.")
             
             
             case "4":
