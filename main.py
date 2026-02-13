@@ -75,17 +75,18 @@ per differenziare in base al tipo reale degli oggetti.
 
 # Ilaria: classi Elettrodomestico e derivate
 
-# from __future__ import annotations
 from datetime import date
 
 class Elettrodomestico:
 
     def __init__(self, marca: str, modello: str, anno_acquisto: int, guasto: str):
+        # accesso tramite metodi setter
         self.set_marca(marca)
         self.set_modello(modello)
         self.set_anno_acquisto(anno_acquisto)
         self.set_guasto(guasto)
 
+    # metodi getter e setter
     def get_marca(self):
         return self.__marca
 
@@ -113,7 +114,7 @@ class Elettrodomestico:
             if anno_acquisto >= 1900 and anno_acquisto <= anno_corrente:
                 self.__anno_acquisto = anno_acquisto
             else:
-                self.__anno_acquisto = anno_corrente +1
+                self.__anno_acquisto = anno_corrente +1  # per rendere 2026 un anno ancora valido. controlli aggiuntivi potrebbero essere su giorno e mese
         else:
             self.__anno_acquisto = anno_corrente +1
 
@@ -127,9 +128,11 @@ class Elettrodomestico:
             self.__guasto = "Non specificato"
 
     def descrizione(self):
+        # descrizione del guasto con tutti get
         return f"{self.get_marca()} {self.get_modello()} ({self.get_anno_acquisto()}) - Guasto: {self.get_guasto()}"
 
     def stima_costo_base(self):
+        # costo base del servizio
         return 30.0
 
 
@@ -219,7 +222,7 @@ class Forno(Elettrodomestico):
 
     def set_tipo_alimentazione(self, tipo_alimentazione: str):
         if isinstance(tipo_alimentazione, str):
-            t = tipo_alimentazione.strip().lower()
+            t = tipo_alimentazione.strip().lower()  # .strip() serve a rimuovere caratteri indesiderati all’inizio e alla fine della stringa
             if t in ["elettrico", "gas"]:
                 self.__tipo_alimentazione = t
                 return
