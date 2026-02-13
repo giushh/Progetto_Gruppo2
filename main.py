@@ -113,9 +113,11 @@ class Elettrodomestico:
             if anno_acquisto >= 1900 and anno_acquisto <= anno_corrente:
                 self.__anno_acquisto = anno_acquisto
             else:
-                self.__anno_acquisto = anno_corrente
+                # self.__anno_acquisto = anno_corrente
+                print("Anno non valido.")
         else:
-            self.__anno_acquisto = anno_corrente
+            # self.__anno_acquisto = anno_corrente
+            print("Anno non valido.")
 
 
     def get_guasto(self):
@@ -367,6 +369,8 @@ if __name__ == "__main__":
                 modello = input("Modello: ")
                 anno = int(input("Anno acquisto: "))
                 guasto = input("Descrizione guasto: ")
+                
+                
                                
                 if tipo == "1":
                     capacita = int(input("Capacità kg: "))
