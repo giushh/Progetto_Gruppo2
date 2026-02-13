@@ -75,7 +75,7 @@ per differenziare in base al tipo reale degli oggetti.
 
 # Ilaria: classi Elettrodomestico e derivate
 
-from __future__ import annotations
+# from __future__ import annotations
 from datetime import date
 
 class Elettrodomestico:
@@ -311,8 +311,9 @@ class Officina:
         
 # Valerio: classe TicketRistorazione 
 
-# Attributi privati (Incapsulamento). Attributi inizianti per __ quindi nessuno può modificarli dall'esterno.
+
 class TicketRiparazione:
+    # Attributi privati (Incapsulamento). Attributi inizianti per __ quindi nessuno può modificarli dall'esterno.
     def __init__(self, id_ticket, elettrodomestico):    # Costruttore __init__ per legare il ticket ad un elettrodomestico specifico.
         self.__id_ticket = id_ticket                    # Numero identificativo della riparazione.
         self.__elettrodomestico = elettrodomestico      # Salva l'intero oggetto (Lavatrice, Forno o Frigo) che "arriva" dagli "Elettrodomestici".
@@ -338,7 +339,6 @@ class TicketRiparazione:
         for spesa in voci_extra:
             totale += spesa
         return totale
-
 
 
 
