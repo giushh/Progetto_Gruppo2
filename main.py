@@ -113,12 +113,9 @@ class Elettrodomestico:
             if anno_acquisto >= 1900 and anno_acquisto <= anno_corrente:
                 self.__anno_acquisto = anno_acquisto
             else:
-                # self.__anno_acquisto = anno_corrente
-                print("Anno non valido.")
+                self.__anno_acquisto = anno_corrente +1
         else:
-            # self.__anno_acquisto = anno_corrente
-            print("Anno non valido.")
-
+            self.__anno_acquisto = anno_corrente +1
 
     def get_guasto(self):
         return self.__guasto
@@ -348,6 +345,8 @@ if __name__ == "__main__":
 
     officina = Officina("Officina Centrale", [])
     stop = False
+    
+    lista_tickets_aperti = []
 
     while not stop:
         
@@ -363,39 +362,52 @@ if __name__ == "__main__":
         match scelta:
             
             case "1":
-                tipo = input("Tipo elettrodomestico (1=Lavatrice, 2=Frigorifero, 3=Forno): ")
-                id_ticket = input("Inserisci ID ticket: ")
-                marca = input("Marca: ")
-                modello = input("Modello: ")
+                tipo = input("Tipo elettrodomestico (1=Lavatrice, 2=Frigorifero, 3=Forno): ")                
                 anno = int(input("Anno acquisto: "))
-                guasto = input("Descrizione guasto: ")
                 
-                
+                if anno <= 2026:
                                
-                if tipo == "1":
-                    capacita = int(input("Capacità kg: "))
-                    giri = int(input("Giri centrifuga: "))
-                    elettro = Lavatrice(marca, modello, anno, guasto, capacita, giri)
-                
-                elif tipo == "2":
-                    litri = int(input("Litri: "))
-                    freezer_input = input("Ha freezer? (si/no): ")
-                    ha_freezer = True if freezer_input == "si" else False
-                    elettro = Frigorifero(marca, modello, anno, guasto, litri, ha_freezer)
-                
-                elif tipo == "3":
-                    alimentazione = input("Tipo alimentazione (elettrico/gas): ")
-                    ventilato_input = input("Ha ventilato? (si/no): ")
-                    ha_ventilato = True if ventilato_input == "si" else False
-                    elettro = Forno(marca, modello, anno, guasto, alimentazione, ha_ventilato)
-                
+                    id_ticket = input("Inserisci ID ticket: ")
+                    
+                    if id_ticket not in lista_tickets_aperti:
+                        lista_tickets_aperti.append(id_ticket)
+                        marca = input("Marca: ")
+                        modello = input("Modello: ")
+                        guasto = input("Descrizione guasto: ")          
+                                
+                        if tipo == "1":
+                            capacita = int(input("Capacità kg: "))
+                            giri = int(input("Giri centrifuga: "))
+                            elettro = Lavatrice(marca, modello, anno, guasto, capacita, giri)
+                        
+                        
+                        elif tipo == "2":
+                            litri = int(input("Litri: "))
+                            freezer_input = input("Ha freezer? (si/no): ")
+                            ha_freezer = True if freezer_input == "si" else False
+                            elettro = Frigorifero(marca, modello, anno, guasto, litri, ha_freezer)
+                        
+                        elif tipo == "3":
+                            alimentazione = input("Tipo alimentazione (elettrico/gas): ")
+                            ventilato_input = input("Ha ventilato? (si/no): ")
+                            ha_ventilato = True if ventilato_input == "si" else False
+                            elettro = Forno(marca, modello, anno, guasto, alimentazione, ha_ventilato)
+                        
+                        else:
+                            print("Tipo non valido.")
+                            continue
+                        
+                        ticket = TicketRiparazione(id_ticket, elettro)
+                        officina.aggiungi_ticket(ticket)
+                        print("Ticket aggiunto correttamente.")
+                        
+                    else: 
+                        print("Id ticket già presente. Riprova")
+                        continue
+                    
                 else:
-                    print("Tipo non valido.")
+                    print("Anno non valido. Riprova")
                     continue
-                
-                ticket = TicketRiparazione(id_ticket, elettro)
-                officina.aggiungi_ticket(ticket)
-                print("Ticket aggiunto correttamente.")
             
             
             case "2":
@@ -405,6 +417,7 @@ if __name__ == "__main__":
             case "3":
                 id_ticket = input("Inserisci ID del ticket da chiudere: ")
                 officina.chiudi_ticket(id_ticket)
+                lista_tickets_aperti.remove(id_ticket)
             
             
             case "4":
