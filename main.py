@@ -247,14 +247,18 @@ class Forno(Elettrodomestico):
     
 # Veronica: classe Officina e punto 5
 
+# Classe Officina
+# Attributi: nome, tickets
 class Officina:
     def __init__(self, nome: str, tickets: list[TicketRiparazione]):
         self.nome = nome
         self.tickets = tickets
 
+    # funzione che permette di aprire nuovi tickets
     def aggiungi_ticket(self, ticket: TicketRiparazione):
         self.tickets.append(ticket)
 
+    # funzione che permette di chiudere tickets completati
     def chiudi_ticket(self, id_ticket):
         trovato = False
         for ticket in self.tickets:
@@ -264,10 +268,11 @@ class Officina:
                 print("Il ticket", id_ticket, "è stato chiuso correttamente.")
                 trovato = True
                 break
-                
+             
         if not trovato:
             print("Il ticket", id_ticket, "non è tra quelli aperti.")
 
+    # funzione che permette di stampare l'elenco di tickets aperti
     def stampa_ticket_aperti(self):
         
         if len(self.tickets) != 0:
@@ -278,13 +283,14 @@ class Officina:
         else:
             print("Non c'è nessun ticket aperto.")
 
-
+    # funzione che restituisce il totale dei preventivi dei tickets aperti
     def totale_preventivi(self):
         totale = 0.0
         for ticket in self.tickets:
             totale = totale + ticket.calcola_preventivo()
         return totale
     
+    # funzione che conta quanti elettrodomestici di ogni tipo sono in lavorazione
     def statistiche_per_tipo(self):
         num_lavatrici = 0
         num_frigoriferi = 0
